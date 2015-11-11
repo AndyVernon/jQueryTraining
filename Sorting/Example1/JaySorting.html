@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>testing java</title>
+
+<script src="http://code.jquery.com/jquery-2.1.4.js"> </script>
+
+
+</head>
+
+<body>
+<h1>sort</h1>
+<a id="lnkPrice" href='#'>Order By Price</a>
+<a id="lnkName" href='#'>Order By Name</a>
+<a id="lnkStar" href='#'>Order By star</a>
+<div class="sortable">
+    <div class="score" data-name="A" data-price="899" data-stars="5"> Hotel A Price 899 5</div> 
+    <div class="score" data-name="C" data-price="699" data-stars="3"> Hotel C Price 699 3</div>
+    <div class="score" data-name="B" data-price="499" data-stars="4"> Hotel B Price 499 4</div> 
+</div>
+
+
+
+<script>
+$('#lnkPrice').click(function(){
+    $('.sortable').each(function(){
+        var $this = $(this);
+        $this.append($this.find('.score').get().sort(function(a, b) {
+            return $(a).data('price') - $(b).data('price');
+        }));
+    });
+});
+
+$('#lnkName').click(function(){ 
+    $('.sortable').each(function(){
+        var $this = $(this);
+        $this.append($this.find('.score').get().sort(function(a, b) {                 
+            return $(a).data('name') > $(b).data('name');
+        }));
+    });
+});
+
+$('#lnkStar').click(function(){ 
+    $('.sortable').each(function(){
+        var $this = $(this);
+        $this.append($this.find('.score').get().sort(function(a, b) {                 
+            return $(a).data('stars') > $(b).data('stars');
+        }));
+    });
+});
+
+</script>
+
+</body>
+</html>
