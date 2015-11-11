@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>testing java</title>
+<!-- Latest jQuery code -->
+<script src="http://code.jquery.com/jquery-2.1.4.js"> </script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div>
+        <h1>Sorting</h1>
+        <div class="row">
+            <div class="col-xs-4">
+                <a id="lnkName" class="sorting_type" href="#">Order by Name</a>
+            </div>
+            <div class="col-xs-4">
+                <a id="lnkPrice" class="sorting_type" href="#">Order by Price</a>
+            </div>
+            <div class="col-xs-4">
+                <a id="lnkStar" class="sorting_type" href="#">Order by Star</a>
+            </div>
+        </div>
+        <div class="sortable">
+            <div class="row score" data-name="A" data-price="899" data-stars="5">
+                <div class="col-xs-4">Hotel A</div>
+                <div class="col-xs-4">899</div>
+                <div class="col-xs-4">5</div>
+            </div>
+            <div class="row score" data-name="B" data-price="699" data-stars="3">
+                <div class="col-xs-4">Hotel B</div>
+                <div class="col-xs-4">699</div>
+                <div class="col-xs-4">3</div>
+            </div>
+            <div class="row score" data-name="C" data-price="499" data-stars="4">
+                <div class="col-xs-4">Hotel C</div>
+                <div class="col-xs-4">499</div>
+                <div class="col-xs-4">4</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // When the document is loaded lets setup the click events
+        $(document).ready(function(){
+            CreateClickEventHandlers();
+        })
+
+        // Lets setup the click events
+        function CreateClickEventHandlers() {
+            // For each instance of the sorting_type class
+            $('.sorting_type').each(function() {
+                // Get the id for the instance
+                var itemId = $(this).attr('id');
+                // Identify which instance we have and set the dataItem variable value
+                var dataItem;
+                switch(itemId){
+                    case "lnkName":
+                        dataItem = "name";
+                        break;
+                    case "lnkPrice":
+                        dataItem = "price";
+                        break;
+                    case "lnkStar":
+                        dataItem = "stars";
+                        break;
+                }
+                // Now we have the dataItem set the click event
+                $(this).click(function() {
+                    // For each instance of sortable class
+                    $('.sortable').each(function() {
+                        var $this = $(this);
+                        $this.append($this.find('.score').get().sort(function(a, b) {
+                            switch(dataItem) {
+                                case "name":
+                                case "stars":
+                                    return $(a).data(dataItem) > $(b).data(dataItem);
+                                    break;
+                                case "price":
+                                    return $(a).data(dataItem) - $(b).data(dataItem);
+                                    break;
+                            }
+                        }));
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
