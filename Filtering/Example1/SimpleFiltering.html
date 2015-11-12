@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>HTML5 jQuery Filtering</title>
+        <!-- Latest jQuery code -->
+        <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div>
+            <h1>HTML5 jQuery Filtering</h1>
+            <div class="row">
+                <div class="col-xs-12">Filter by</div>
+            </div>
+            <!-- Show a filter -->
+            <div class="row"  style="padding-bottom: 10px;">
+                <div class="col-xs-2">Name</div>
+                <div class="col-xs-10">
+                    <select class="name-filter">
+                        <option value="-1">Show All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3" style="font-weight: bold; text-decoration: underline;">Name</div>
+                <div class="col-xs-3" style="font-weight: bold; text-decoration: underline;">Job Title</div>
+            </div>
+            <!-- Data -->
+            <div class="names">
+                <div class="row" data-id="1" data-name="Joe Smith" data-job="Manager">
+                    <div class="col-xs-3">Joe Smith</div>
+                    <div class="col-xs-3">Manager</div>
+                </div>
+                <div class="row" data-id="2" data-name="Jim Davies" data-job="Programmer">
+                    <div class="col-xs-3">Jim Davies</div>
+                    <div class="col-xs-3">Programmer</div>
+                </div>
+                <div class="row" data-id="3" data-name="Ann Smith" data-job="Manager">
+                    <div class="col-xs-3">Ann Smith</div>
+                    <div class="col-xs-3">Manager</div>
+                </div>
+                <div class="row" data-id="4" data-name="Sue Less" data-job="Tester">
+                    <div class="col-xs-3">Sue Less</div>
+                    <div class="col-xs-3">Tester</div>
+                </div>
+                <div class="row" data-id="5" data-name="Mark Road" data-job="Programmer">
+                    <div class="col-xs-3">Mark Road</div>
+                    <div class="col-xs-3">Programmer</div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                PopulateNamesSelectList();
+            })
+            
+            // Lets populate the names select list based on all the names
+            function PopulateNamesSelectList() {
+                // For each div within div with class "names"
+                $('.names').children().each(function() {
+                    // Get the data-id & data-name
+                    var id = $(this).data("id");
+                    var name = $(this).data("name");
+                    // Add an option to the select list with the value of data-id and displaying data-name
+                    $('.name-filter').append("<option value='" + id + "'>" + name + "</option>");
+                });
+            }
+            
+            // When we are changing or selecting all we want to show all
+            function ShowAllItems() {
+                $('.names').children().each(function() {
+                   $(this).show(); 
+                });
+            }
+            
+            // Lets define what happens when we change the name in the list
+            $('.name-filter').change(function() {
+                // First of all lets show everything again
+                ShowAllItems();
+                // Now lets get the option value for the item we have selected
+                var selectedItem = $(this).find(':selected').val();
+                // If we have selected Show All (value of -1) then we have already shown everything
+                // otherwise we need to hide all except for the selected value
+                if (selectedItem != -1) {
+                    // Go through each of the data items
+                    $('.names').children().each(function() {
+                        // Get the id of the data item (data-id)
+                        var id = $(this).data("id");
+                        // If this is not the same as the selected item value then hide the data item
+                        if (id != selectedItem) {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
