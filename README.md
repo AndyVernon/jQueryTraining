@@ -1,2 +1,4 @@
 # jQueryTraining
-Repository for jQuery training examples
+Repository for jQuery / HTML5 training examples
+- Sorting
+- Filtering
